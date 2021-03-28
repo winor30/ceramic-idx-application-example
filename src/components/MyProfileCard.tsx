@@ -8,7 +8,6 @@ const MyProfileCard = () => {
       router.push('/signup');
     },
   });
-  console.log(profile);
   if (!profile) {
     return (
       <div className="border border-light-blue-300 shadow rounded-md p-4 max-w-sm w-full mx-auto">

@@ -20,7 +20,7 @@ export const useSignUp = () => {
 
     const basicProfile = await getBasicProfile().catch(returnErr);
     if (basicProfile instanceof Error) {
-      console.log(basicProfile);
+      console.error(basicProfile);
       setStatus('error');
       return;
     }

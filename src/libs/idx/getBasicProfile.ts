@@ -18,19 +18,15 @@ export const getBasicProfile = async (): Promise<Error | LoginData | null> => {
     return ethEnabled;
   }
 
-  console.log('provider');
   const provider = new ethers.providers.Web3Provider(window.ethereum);
 
-  console.log('signer');
   const signer = provider.getSigner();
 
-  console.log('address');
   const address = await signer.getAddress().catch(returnErr);
   if (address instanceof Error) {
     return address;
   }
 
-  console.log('auth provider');
   const authProvider = new EthereumAuthProvider(window.ethereum, address);
   const threeIdConnect = getThreeIdConnect();
   const connected = await threeIdConnect.connect(authProvider).catch(returnErr);
@@ -51,7 +47,6 @@ export const getBasicProfile = async (): Promise<Error | LoginData | null> => {
   const basicProfile = await idx
     .get<LoginData | undefined>(constants.definitions.basicProfile, did)
     .catch(returnErr);
-  console.log({ basicProfile });
   if (!basicProfile) {
     return null;
   }
