@@ -29,12 +29,6 @@ const MyProfileCard = () => {
         <h3 className="text-black text-sm bold font-sans">{profile?.name}</h3>
         <p className="mt-2 font-sans font-light text-grey-dark">{profile?.description}</p>
       </div>
-      <div className="flex justify-center pb-3 text-grey-dark">
-        <div className="text-center">
-          <h2>0</h2>
-          <span>Friends</span>
-        </div>
-      </div>
     </div>
   );
 };
