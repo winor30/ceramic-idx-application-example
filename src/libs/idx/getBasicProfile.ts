@@ -1,6 +1,5 @@
 import { EthereumAuthProvider } from '3id-connect';
 import * as constants from '@ceramicstudio/idx-constants';
-import { ethers } from 'ethers';
 import { getIdx } from '.';
 import { getThreeIdConnect } from '../3id';
 import { returnErr } from '../common/catch';
@@ -13,18 +12,14 @@ interface LoginData {
 declare let window: Window & typeof globalThis & { ethereum: any };
 
 export const getBasicProfile = async (): Promise<Error | LoginData | null> => {
-  const ethEnabled = await window.ethereum.enable().catch(returnErr);
-  if (ethEnabled instanceof Error) {
-    return ethEnabled;
+  const addresses: string[] | Error = await window.ethereum.enable().catch(returnErr);
+  if (addresses instanceof Error) {
+    return addresses;
   }
 
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-
-  const signer = provider.getSigner();
-
-  const address = await signer.getAddress().catch(returnErr);
-  if (address instanceof Error) {
-    return address;
+  const address = addresses[0];
+  if (!address) {
+    return new Error('address is undefined');
   }
 
   const authProvider = new EthereumAuthProvider(window.ethereum, address);
